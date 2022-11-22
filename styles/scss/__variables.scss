@@ -13,16 +13,7 @@ $g_form-invalid-color : #ff000a;
     폰트
 =================================================*/
 $g_font-family: (
-  system: ' "맑은 고딕", "Malgun Gothic", "애플 SD 산돌고딕 Neo", "Apple SD Gothic Neo", sans-serif ',
-  noto: '"Noto Sans CJKKR", sans-serif',
-  nanum: '"Nanum Gothic", sans-serif',
-  roboto: '"Roboto", "Noto Sans CJKKR", sans-serif',
-  dotum: '"Dotum", sans-serif',
   pretendard: '"Pretendard Variable", sans-serif',
-  nanumSquare-300 : '"NANUMSQUARE-300", sans-serif',
-  nanumSquare-400 : '"NANUMSQUARE-400", sans-serif',
-  nanumSquare-700 : '"NANUMSQUARE-700", sans-serif',
-  nanumSquare-800 : '"NANUMSQUARE-800", sans-serif',
 );
 
 $font-system: #{map-get($g_font-family, system)};
