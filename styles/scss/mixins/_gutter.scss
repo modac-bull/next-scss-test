@@ -1,0 +1,90 @@
+// gutter mixin
+@mixin make-gutter($gutter-size : $g_gutter-sizer){
+  @each $breakpoint, $point in $g_media-breakpoints {
+    @if $breakpoint == xs {
+      @each $key, $val in $gutter-size {
+        @each $key2, $val2 in $val {
+          @if($key == "percent"){
+            .gutter-per-#{$key2} {
+              margin-right: -$val2;
+              margin-left: -$val2;
+            }
+          }@else {
+            .gutter-#{$key2} {
+              margin-right: -$val2;
+              margin-left: -$val2;
+            }
+          }
+        }
+      }
+    }@else {
+      @media (min-width: #{$point}) {
+        @each $key, $val in $gutter-size {
+          @each $key2, $val2 in $val {
+            @if($key == "percent"){
+              .gutter-per-#{$key2}-#{$breakpoint} {
+                margin-right: -$val2;
+                margin-left: -$val2;
+              }
+            }@else {
+              .gutter-#{$key2}-#{$breakpoint} {
+                margin-right: -$val2;
+                margin-left: -$val2;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+// col-grid gutter 설정
+@mixin make-col-gutter($gutter-size : $g_gutter-sizer){
+  @each $breakpoint, $point in $g_media-breakpoints {
+    @if $breakpoint == xs {
+      @each $key, $val in $gutter-size {
+        @each $key2, $val2 in $val {
+          @if($key == "percent"){
+            .gutter-per-#{$key2} {
+              & > * {
+                padding-right: $val2;
+                padding-left: $val2;
+              }
+            }
+          }@else {
+            .gutter-#{$key2} {
+              & > * {
+                padding-right: $val2;
+                padding-left: $val2;
+              }
+            }
+          }
+        }
+      }
+    }@else {
+      @media (min-width: #{$point}) {
+        @each $key, $val in $gutter-size {
+          @each $key2, $val2 in $val {
+            @if($key == "percent"){
+              .gutter-per-#{$key2}-#{$breakpoint} {
+                & > * {
+                  padding-right: $val2;
+                  padding-left: $val2;
+                }
+              }
+            }@else {
+              .gutter-#{$key2}-#{$breakpoint} {
+                & > * {
+                  padding-right: $val2;
+                  padding-left: $val2;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

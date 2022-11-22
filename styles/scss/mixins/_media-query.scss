@@ -1,0 +1,63 @@
+// media-query-min 믹스인
+// [매개변수]
+// $breakpoint 기본값: 없음
+// $breakpoint 에 가용가능한 값
+// (1) $media-breakpoints 의 키 값 (xs, sm, md, lg, xl )중 하나
+// (2) 고정 px값
+// $breakpoint 전달된 값에 따라서 @media(min-width: "매개변수에 해당하는 값") 셋팅해줍니다.
+// $breakpoint 값을 픽셀로 넣는다면 해당 픽셀값의 미디어쿼리를 만들어 줍니다.
+// ex) @include media-query-min(lg) { @content }
+// ex) @include media-query-min(500px) { @content }
+@mixin media-query-min( $breakpoint ) {
+  @if map_has_key( $g_media-breakpoints, $breakpoint ){
+    @if  $breakpoint == "xs" {
+      @content
+    }
+    @else {
+      @media screen and (min-width: map_get($g_media-breakpoints, $breakpoint)) {
+        @content
+      }
+    }
+  }
+  @else if unit($breakpoint) == "px" {
+    @media screen and (min-width: $breakpoint){  @content  }
+  }
+}
+@mixin media-query-max( $breakpoint ) {
+  @if map_has_key( $g_media-breakpoints, $breakpoint ){
+    @if  $breakpoint == "xs" {
+      @content
+    }
+    @else {
+      @media screen and (max-width: (map_get($g_media-breakpoints, $breakpoint))-0.02px) {
+        @content
+      }
+    }
+  }
+  @else if unit($breakpoint) == "px" {
+    @media screen and (max-width: $breakpoint){  @content  }
+  }
+}
+
+
+// media-query-min-val 함수
+// 전역변수 $media-breakpoints map의 value를 반환해 줍니다.
+// 주로 each 문과 같은 loop 문에서 활용됩니다.
+// ex)
+// @each $breakpoint in map_keys($media-breakpoints) {
+//   $point: media-query-min-val($breakpoint);
+//   @media ( min-width: #{$point} ){
+//     .#{$breakpoint}-f-l { @include float-left }
+//     .#{$breakpoint}-f-r { @include float-right }
+//     .#{$breakpoint}-f-n { @include float-none }
+//   }
+// }
+@function media-query-min-val( $breakpoint ){
+  @return map_get($g_media-breakpoints, $breakpoint);
+}
+
+
+
+
+
+

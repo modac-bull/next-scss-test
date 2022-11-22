@@ -1,0 +1,98 @@
+@function map-set($map, $key, $value) {
+  $new: ($key: $value);
+  @return map-merge($map, $new);
+}
+
+
+//prefix 제거
+//태그이름, 속성, 아이디 등  셀렉터 가능도록
+@function makeMapToCodes($map, $prefix: "", $self: false) {
+  $codes : ();
+  @each $key, $val in $map {
+    @if ( type-of($val) == map ) {
+
+      @if ($key == "&") {
+        $make: makeMapToCodes($val, "", true);
+        $codes: map-merge($codes, $make);
+      } @else {
+        $selector: ".#{$prefix}#{$key}";
+
+        @if ($self) {
+          $selector : "&#{$prefix}#{$key}";
+        }
+        $make: makeMapToCodes($val, $prefix);
+        $codes: map-set($codes, $selector, $make);
+      }
+      
+    } @else {
+      $codes: map-set($codes, $key, $val);
+    }
+  }
+  @return $codes;
+};
+
+
+@mixin printCodes($map) {
+
+  @each $key, $val in $map {
+   
+    @if ( type-of($val) == map ) {
+      #{$key} {
+        @include printCodes($val);
+      }
+    } @else {
+      #{$key} : #{$val};
+    }
+    
+  }
+}
+
+// isMap 함수
+// #{key} : #{value}의 형태를 리턴해주는 함수
+// isMap($val, $key);
+// isMap 함수에서 인자로 넘어온 '$val'에 할당된 값이 map이라면 ismap함수를 재귀호출 한다.
+// 예외적으로 키값이 "_" 라면 isPseudo를 호출한다.
+// 최종적으로 #{key} : #{value}의 값을 리턴하도록 만든다.
+
+//isPseudo 함수
+//가상 선택자를 만들어 리턴해주는 함수
+//
+
+
+//@function isMap ($val, $key) {
+//  $result : ();
+//
+//  @if (type-of($val) == map) {
+//    @each $key2, $val2 in $val {
+//      @if (type-of($val2) == map and $key == null) {
+//        $map : isMap($val2, $key2);
+//        $mapkey : map-keys($map);
+//        $result: map-set($result, $mapkey, map-get($map, #{$mapkey}));
+//      } @else if (type-of($val2) == map and $key == "_"){
+//        $result: map-set($result, $key2, isMap($val2, $key2));
+//      } @else {
+//        $result: map-set($result, $key2, $val2);
+//      }
+//    }
+//  } @else {
+//    $result: map-set($result, $val, $key);
+//  }
+//
+//  @return $result;
+//};
+
+
+//@function isPseudo ($key, $val) {
+//  $result: null;
+//  @if ($key == "_") {
+//    @each $key2, $val2 in $val {
+//      $result: isMap($key2, $val2);
+//      @return isMap($key2, $val2);
+//    }
+//  } @else  {
+//    $result: isMap($key, $val);
+//    @return $result;
+//  }
+//};
+
+

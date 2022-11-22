@@ -1,0 +1,207 @@
+// make-row 믹스인
+// [매개변수]
+// $grid-gutter 기본값: $grid-gutter-width
+// $grid-gutter 전달된 값에 따라서 margin-right, margin-left 값을 셋팅해 줍니다.
+// ex) @include make-row( $grid-gutter: $grid-gutter-width);
+@mixin make-row() {
+  display: block;
+  @include clear();
+}
+
+@mixin make-flex-row() {
+  display: flex;
+  flex-wrap:wrap;
+}
+
+// make-col-set 믹스인
+// [매개변수]
+// $grid-col-cnt 기본값: $grid-columns
+// ex) @include make-col-set();
+// ex) @include make-col-set($grid-col-cnt: 5);
+@mixin make-col-set( $grid-col-set: $g_grid-col-set ) {
+  $grid-col-name : null;
+  @each $key, $val in $grid-col-set {
+    @if($key == default){
+      $grid-col-name : null;
+    }@else {
+      $grid-col-name : $key;
+    }
+    @include make-col($val, $grid-col-name );
+  }
+}
+
+// flex 
+@mixin make-flex-col-set( $grid-col-set: $g_grid-col-set) {
+  $grid-col-name: null;
+  @each $key, $val in $grid-col-set {
+    @if($key == default){
+      $grid-col-name : null;
+    }@else {
+      $grid-col-name : $key;
+    }
+    @include make-flex-col( $val, $grid-col-name );
+  }
+}
+
+@mixin make-col( $grid-col-cnt: $grid-col-cnt, $col-name: $col-name ) {
+  @each $breakpoint, $point in $g_media-breakpoints {
+    @if $breakpoint == xs {
+      .#{$col-name}col {
+        max-width: 100%;
+      }
+      .#{$col-name}col-auto {
+        width: auto;
+      };
+      @for $i from 1 through $grid-col-cnt {
+        .#{$col-name}col-#{$i} {
+          width: percentage($i / $grid-col-cnt);
+        }
+      }
+    } @else {
+      @media (min-width: #{$point}) {
+        .#{$col-name}col-#{$breakpoint} {
+          max-width: 100%;
+        }
+        .#{$col-name}col-auto-#{$breakpoint} {
+          width: auto;
+        };
+        @for $i from 1 through $grid-col-cnt {
+          .#{$col-name}col-#{$i}-#{$breakpoint} {
+            width: percentage($i / $grid-col-cnt);
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin make-flex-col( $grid-col-cnt: $grid-col-cnt, $col-name: $col-name ) {
+  @each $breakpoint, $point in $g_media-breakpoints {
+    @if $breakpoint == xs {
+      .#{$col-name}col {
+        flex-basis: 0;
+        flex-grow: 1;
+        max-width: 100%;
+      }
+      .#{$col-name}col-auto {
+        flex: 0 0 auto;
+        width: auto;
+        max-width: 100%;
+      };
+      @for $i from 1 through $grid-col-cnt {
+        .#{$col-name}col-#{$i} {
+          flex: 0 0 percentage($i / $grid-col-cnt);
+          max-width : percentage($i / $grid-col-cnt);
+        }
+      }
+    } @else {
+      @media (min-width: #{$point}) {
+        .#{$col-name}col-#{$breakpoint} {
+          flex-basis: 0;
+          flex-grow: 1;
+          max-width: 100%;
+        }
+        .#{$col-name}col-auto-#{$breakpoint} {
+          flex: 0 0 auto;
+          width: auto;
+          max-width: 100%;
+        };
+        @for $i from 1 through $grid-col-cnt {
+          .#{$col-name}col-#{$i}-#{$breakpoint} {
+            flex: 0 0 percentage($i / $grid-col-cnt);
+            max-width : percentage($i / $grid-col-cnt);
+          }
+        }
+      }
+    }
+  }
+}
+
+// pull, push, offset setting 
+@mixin make-pullPushOffset-set( $grid-col-set: $g_grid-col-set) {
+  $grid-col-name : null;
+  @each $key, $val in $grid-col-set {
+    @if($key == default){
+      $grid-col-name : null;
+    }@else {
+      $grid-col-name : $key;
+    }
+    @include make-pull( $val, $grid-col-name );
+    @include make-push( $val, $grid-col-name );
+    @include make-offset( $val, $grid-col-name );
+  }
+}
+
+@mixin make-pull( $grid-col-cnt: $grid-col-cnt, $col-name: $col-name ) {
+  @each $breakpoint, $point in $g_media-breakpoints {
+    @if $breakpoint == xs {
+      .#{$col-name}pull-0 {
+        right: auto;
+      }
+      @for $i from 1 through $grid-col-cnt {
+        .#{$col-name}pull-#{$i} {
+          right: percentage($i / $grid-col-cnt);
+        }
+      }
+    } @else {
+      @media (min-width: #{$point}) {
+        .#{$col-name}pull-0-#{$breakpoint} {
+          right: auto;
+        }
+        @for $i from 1 through $grid-col-cnt {
+          .#{$col-name}pull-#{$i}-#{$breakpoint} {
+            right: percentage($i / $grid-col-cnt);
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin make-push( $grid-col-cnt: $grid-col-cnt, $col-name: $col-name ) {
+  @each $breakpoint, $point in $g_media-breakpoints {
+    @if $breakpoint == xs {
+      .#{$col-name}push-0 {
+        left: auto;
+      }
+      @for $i from 1 through $grid-col-cnt {
+        .#{$col-name}push-#{$i} {
+          left: percentage($i / $grid-col-cnt);
+        }
+      }
+    } @else {
+      @media (min-width: #{$point}) {
+        .#{$col-name}push-0-#{$breakpoint} {
+          left: auto;
+        }
+        @for $i from 1 through $grid-col-cnt {
+          .#{$col-name}push-#{$i}-#{$breakpoint} {
+            left: percentage($i / $grid-col-cnt);
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin make-offset( $grid-col-cnt: $grid-col-cnt, $col-name: $col-name ) {
+  @each $breakpoint, $point in $g_media-breakpoints {
+    $point: media-query-min-val($breakpoint);
+    @if $breakpoint == xs {
+      @for $i from 1 through $grid-col-cnt - 1 {
+        .#{$col-name}offset-#{$i} {
+          margin-left: percentage($i / $grid-col-cnt);
+        }
+      }
+    } @else {
+      @media (min-width: #{$point}) {
+        @for $i from 1 through $grid-col-cnt - 1 {
+          .#{$col-name}offset-#{$i}-#{$breakpoint} {
+            margin-left: percentage($i / $grid-col-cnt);
+          }
+        }
+      }
+    }
+  }
+}
+

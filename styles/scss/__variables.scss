@@ -1,0 +1,149 @@
+/*=================================================
+    컬러
+=================================================*/
+$g_point-theme-color: #0b6fe8;
+$g_point-font-color: $g_point-theme-color;
+
+$g_border-color : #ddd;
+$g_placeholder-color: #aaa;
+$g_form-invalid-color : #ff000a;
+
+
+/*=================================================
+    폰트
+=================================================*/
+$g_font-family: (
+  system: ' "맑은 고딕", "Malgun Gothic", "애플 SD 산돌고딕 Neo", "Apple SD Gothic Neo", sans-serif ',
+  noto: '"Noto Sans CJKKR", sans-serif',
+  nanum: '"Nanum Gothic", sans-serif',
+  roboto: '"Roboto", "Noto Sans CJKKR", sans-serif',
+  dotum: '"Dotum", sans-serif',
+  pretendard: '"Pretendard Variable", sans-serif',
+  nanumSquare-300 : '"NANUMSQUARE-300", sans-serif',
+  nanumSquare-400 : '"NANUMSQUARE-400", sans-serif',
+  nanumSquare-700 : '"NANUMSQUARE-700", sans-serif',
+  nanumSquare-800 : '"NANUMSQUARE-800", sans-serif',
+);
+
+$font-system: #{map-get($g_font-family, system)};
+$font-noto: #{map-get($g_font-family, noto)};
+$font-nanum: #{map-get($g_font-family, nanum)};
+$font-roboto: #{map-get($g_font-family, roboto)};
+$font-dotum: #{map-get($g_font-family, dotum)};
+$font-pretendard: #{map-get($g_font-family, pretendard)};
+$font-nanumSqure-300: #{map-get($g_font-family,nanumSquare-300)};
+$font-nanumSqure-400: #{map-get($g_font-family,nanumSquare-400)};
+$font-nanumSqure-700: #{map-get($g_font-family,nanumSquare-700)};
+$font-nanumSqure-800: #{map-get($g_font-family,nanumSquare-800)};
+
+// default font 설정
+$font-300 : $font-noto;
+$font-400 : $font-noto;
+$font-500 : $font-noto;
+$font-700 : $font-noto;
+$font-800 : $font-noto;
+
+// nanumSqure font 사용시
+// $font-300 : $font-nanumSqure-300;
+// $font-400 : $font-nanumSqure-400;
+// $font-500 : $font-nanumSqure-400;
+// $font-700 : $font-nanumSqure-700;
+// $font-800 : $font-nanumSqure-800;
+
+// font-size
+$g_font-size:(
+  xs: 10px,
+  sm: 12px,
+  md: 15px,
+  lg: 18px,
+  xl: 24px,
+);
+
+// font-weight
+$g_font-weights: 100, 200, 300, 400, 500, 600, 700, 800, 900;
+
+
+/*=================================================
+    미디어쿼리
+=================================================*/
+$g_media-breakpoints: (
+  xs: 0,
+  sm: 544px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  full: 1920px
+);
+
+/*=================================================
+    레이아웃
+=================================================*/
+// area
+$g_max-width: 1110px; // 기본 area
+$g_gutter-width: 15px;
+$g_gutter-width-md: 60px;
+
+$g_area_info: (
+  default: (
+    max-width: $g_max-width + $g_gutter-width*2,
+    gutter-width: $g_gutter-width,
+    media : (
+      md : (
+        max-width: $g_max-width + $g_gutter-width-md*2,
+        gutter-width: $g_gutter-width-md,
+      )
+    )
+  ),
+  full: (
+    max-width: $g_max-width + $g_gutter-width*2,
+    gutter-width: $g_gutter-width,
+    media: (
+      lg : (
+        max-width: 1750px,
+        gutter-width: 2%,
+      )
+    )
+  ),
+  nogutter : (
+    max-width: $g_max-width,
+  )
+);
+
+// grid
+$g_gutter-sizer : (
+  percent : ( //.gutter-per-1
+    1 : 1%,
+  ),
+  pixel : ( //.gutter-10
+    2 : 2px,
+    3 : 3px,
+    5 : 5px,
+    7 : 7px,
+    8 : 8px,
+    10 : 10px,
+    12 : 12px,
+    14 : 14px,
+    15 : 15px,
+    18 : 18px,
+    20 : 20px,
+  ),
+);
+
+$g_grid-col-set: (
+  default : 12, //.col-12
+  ten-: 10, //.five-col-5
+  five-: 5, //.five-col-5
+);
+
+/*=================================================
+    컴포넌트
+=================================================*/
+// ellipsis, 말줄임표
+$g_ell-set: (
+  none: none, // .ell-none
+  1 : 1, // .ell-1
+  2 : 2,
+  3 : 3,
+  4 : 4,
+  5 : 5,
+)

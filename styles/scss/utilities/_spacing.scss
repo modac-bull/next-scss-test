@@ -1,0 +1,48 @@
+/* Margin and Padding */
+@function breakpoint-infix($name, $breakpoints: $g_media-breakpoints) {
+  $min: map-get($breakpoints, $name);
+  $min-keys : if($min != 0, $min, null); // xs 출력 안하기 위하여 null 값으로 변경 작업
+  @return if($min-keys == null, "", "-#{$name}");
+}
+
+@each $breakpoint in map-keys($g_media-breakpoints) {
+  @include media-query-min($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $g_media-breakpoints); // infix = -sm / -md ....
+    @each $prop, $abbrev in (margin: m, padding: p) {
+      @for $length from 0 through 20 {
+        .#{$abbrev}-#{$length*5}#{$infix} {
+          #{$prop}: $length*5px !important;
+        }
+        .#{$abbrev}t-#{$length*5}#{$infix}{
+          #{$prop}-top: $length*5px !important;
+        }
+        .#{$abbrev}r-#{$length*5}#{$infix}{
+          #{$prop}-right: $length*5px !important;
+        }
+        .#{$abbrev}b-#{$length*5}#{$infix}{
+          #{$prop}-bottom: $length*5px !important;
+        }
+        .#{$abbrev}l-#{$length*5}#{$infix}{
+          #{$prop}-left: $length*5px !important;
+        }
+      }
+    }
+
+    // Some special margin utils
+    .m-auto#{$infix} {
+      margin: auto !important;
+    }
+    .mt-auto#{$infix} {
+      margin-top: auto !important;
+    }
+    .mr-auto#{$infix} {
+      margin-right: auto !important;
+    }
+    .mb-auto#{$infix} {
+      margin-bottom: auto !important;
+    }
+    .ml-auto#{$infix} {
+      margin-left: auto !important;
+    }
+  }
+}
