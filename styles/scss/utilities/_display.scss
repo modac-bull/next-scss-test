@@ -1,0 +1,17 @@
+/* display */
+$display : none, inline, inline-block, block, table, table-row, table-cell, flex, inline-flex;
+
+@each $breakpoint, $value in $g_media-breakpoints {
+  @if $breakpoint == xs {
+    @each $display in $display {
+      .#{$display} {display: $display !important;}
+    }
+  }
+  @else{
+    @media ( min-width: #{$value} ) {
+      @each $display in $display {
+        .#{$display}-#{$breakpoint} { display: $display !important; }
+      }
+    }
+  }
+}

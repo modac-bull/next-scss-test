@@ -1,0 +1,48 @@
+// ellipsis mixin
+@mixin make-ell-set($ell-set : $g_ell-set) {
+  @each $key, $val in $ell-set {
+    @if $key == none {
+      .ell-#{$val} {
+        display: block !important;
+        overflow: visible;
+        text-overflow: initial;
+        -webkit-box-orient: initial;
+        -webkit-line-clamp: none;
+      }
+    } @else {
+      .ell-#{$val} {
+        display: -webkit-box !important;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-box-orient:vertical;
+        -webkit-line-clamp: $val;
+      }
+    }
+  }
+}
+
+@mixin make-ell($ell-set : $g_ell-set) {
+  @each $breakpoint, $point in $g_media-breakpoints {
+    @media (min-width: #{$point}) {
+      @each $key, $val in $ell-set {
+        @if($key == 'none') {
+          .ell-#{$val}-#{$breakpoint} {
+            display: block !important;
+            overflow: visible;
+            text-overflow: initial;
+            -webkit-box-orient: initial;
+            -webkit-line-clamp: none;
+          }
+        } @else {
+          .ell-#{$val}-#{$breakpoint} {
+            display: -webkit-box !important;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-box-orient:vertical;
+            -webkit-line-clamp: $val;
+          }
+        }
+      }
+    }
+  }
+}
